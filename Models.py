@@ -76,11 +76,11 @@ class GymHall(Model):
         self.__openStart = int()
         self.__openEnd = int()
         self.__equipments = []
+        self.__exercisePlans = []
     def addTrainer(self, trainer: Trainer):
         self.__trainers.append(trainer)
     def removeTrainer(self, trainer: Trainer):
-        i = self.__trainers.index(trainer)
-        self.__trainers.pop(i)
+        self.__trainers.remove(trainer)
     def getTrainers(self):
         return self.__trainers.__iter__()
     def setOpenTime(self, start: int, end: int):
@@ -93,10 +93,18 @@ class GymHall(Model):
     def addEquipment(self, equipement: Equipment):
         self.__equipments.append(equipement)
     def removeEquipment(self, equipment: Equipment):
-        i = self.__equipments.index(equipment)
-        self.__equipments.pop(i)
+        self.__equipments.remove(equipment)
     def getAllEquipments(self):
         return self.__equipments.__iter__()
+    def addExercisePlan(self, plan: ExercisePlan):
+        self.__exercisePlans.append(plan)
+    def removedExercisePlan(self, plan: ExercisePlan):
+        self.__exercisePlans.remove(plan)
+    def getAllExercisePlans(self):
+        return self.__exercisePlans.__iter__()
 
 class Controller():
-    pass
+    def __init__(self):
+        self.__trainers = []
+        self.__halls = []
+        self.__equipments = []
