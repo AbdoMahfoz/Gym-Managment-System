@@ -7,6 +7,7 @@ if __name__ == '__main__':
     Window = QtWidgets.QMainWindow()
     ui = MainWindow()
     ui.setupUi(Window)
-    ui.initialize()
+    ui.initialize(Window)
     Window.show()
     app.exec_()
+    ui.onExit()
