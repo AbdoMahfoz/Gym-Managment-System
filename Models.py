@@ -31,10 +31,18 @@ class Equipment(eModel):
         self.__hall = None
 
     def reserveEquipment(self, start: int, end: int):
+        if not self.checkAvailibility(start, end):
+            return False
+        self.__reservations.append((start, end))
+        return True
+
+    def clearReservation(self, start: int, end: int):
+        self.__reservations.remove((start, end))
+
+    def checkAvailibility(self, start: int, end: int):
         for reserve in self.__reservations:
             if reserve[0] <= end and reserve[1] >= start:
                 return False
-        self.__reservations.append((start, end))
         return True
 
     def getReservation(self):
@@ -56,12 +64,18 @@ class Trainer(eModel):
         self.__assignments = []
 
     def setGymHall(self, hall):
+        start, end = hall.getOpenTime()
+        if self.__workStart <= start or self.__workEnd >= end:
+            raise Exception("Trainer work time is incompatible with hall's open time")
         self.__hall = hall
 
     def getGymHall(self):
         return self.__hall
 
     def setWorkTimes(self, workStart: int, workEnd: int):
+        start, end = self.getGymHall().getOpenTime()
+        if self.__workStart <= start or self.__workEnd >= end:
+            raise Exception("Trainer work time is incompatible with hall's open time")
         self.__workStart = workStart
         self.__workEnd = workEnd
 
@@ -72,10 +86,17 @@ class Trainer(eModel):
         return self.__assignments.__iter__()
 
     def assignToCustomer(self, start: int, end: int):
+        if not self.checkAvailability(start, end):
+            return False
+        self.__assignments.append((start, end))
+        return True
+    
+    def checkAvailability(self, start: int, end: int):
+        if start <= self.__workStart or end >= self.__workEnd:
+            return False
         for assignment in self.__assignments:
             if assignment[0] <= end and assignment[1] >= start:
                 return False
-        self.__assignments.append((start, end))
         return True
 
     def clearAssignment(self, start: int, end: int):
@@ -105,7 +126,7 @@ class ExercisePlan(Model):
         self.__trainer = trainer
 
     def getPlanItems(self):
-        return self.__planItems
+        return self.__planItems.__iter__()
 
     def getTrainer(self):
         return self.__trainer
@@ -165,19 +186,18 @@ class GymHall(eModel):
 
 
 class Subscription(Model):
-    def __init__(self, id: int, trainer: Trainer, plan: ExercisePlan, reservationDate: datetime, dailyStart: int, dailyEnd: int):
+    def __init__(self, id: int, plan: ExercisePlan, reservationDate: datetime, dailyStart: int, dailyEnd: int):
         super().__init__(id)
-        self.__trainer = trainer
         self.__plan = plan
         self.__reservationDate = reservationDate
         self.__dailyStart = dailyStart
         self.__dailyEnd = dailyEnd
 
     def getHall(self):
-        return self.__trainer.getGymHall()
+        return self.getTrainer().getGymHall()
 
     def getTrainer(self):
-        return self.__trainer
+        return self.__plan.getTrainer()
 
     def getExercisePlan(self):
         return self.__plan
