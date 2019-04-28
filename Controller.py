@@ -1,10 +1,9 @@
-import Models
+from Models import Trainer, GymHall, ExercisePlan, Customer, datetime, Subscription
 
 
 class Controller():
     def __init__(self):
         self.__halls = []
-        self.__equipments = []
         self.__customers = []
 
     def readFromFile(self, fileName):
@@ -14,43 +13,38 @@ class Controller():
         pass
 
     def getAllHalls(self):
+        return self.__halls.__iter__()
+
+    def getAllCustomers(self):
+        return self.__customers.__iter__()
+
+    def createHall(self, name: str) -> GymHall:
         pass
 
-    def getAllTrainersInHall(self, hall: Models.GymHall):
+    def createPlan(self, trainer: Trainer, equipment: list, duration: list, steps: list) -> ExercisePlan:
         pass
 
-    def getAllEquipmentsInHall(self, hall: Models.GymHall):
+    def createTrainer(self, name: str, workStart: int, workEnd: int, hall: GymHall) -> Trainer:
         pass
 
-    def getAllPlansOfTrainer(self, trainer: Models.Trainer):
+    def createCustomer(self, name: str) -> Customer:
         pass
 
-    def createHall(self, name: str) -> Models.GymHall:
-        pass
-
-    def createPlan(self, trainer: Models.Trainer, equipment: list, duration: list, steps: list) -> Models.ExercisePlan:
-        pass
-
-    def createTrainer(self, name: str, workStart: int, workEnd: int, hall: Models.GymHall):
-        pass
-
-    def createCustomer(self, name: str):
-        pass
-
-    def subscribeCustomer(self, customer: Models.Customer, plan: Models.ExercisePlan,
-                                dailyStart: int, dailyEnd: int, reservationDate: Models.datetime) -> bool:
+    def subscribeCustomer(self, customer: Customer, plan: ExercisePlan,
+                                dailyStart: int, dailyEnd: int, reservationDate: datetime) -> bool:
         if not self.checkAvailability(plan, dailyStart, dailyEnd):
             return False
         plan.getTrainer().assignToCustomer(dailyStart, dailyEnd)
         for item in plan.getPlanItems():
             item.getEquipment().reserveEquipment(dailyStart, dailyEnd)
-        subscription = Models.Subscription(len(customer.getSubscribtions()), plan, reservationDate, dailyStart, dailyEnd)
+        subscription = Subscription(len(customer.getSubscribtions()), plan, reservationDate, dailyStart, dailyEnd)
         customer.subscribe(subscription)
+        plan.getTrainer().addSubscribtion(subscription)
 
-    def getSubscribtionsOfCustomer(self, customer: Models.Customer):
+    def getSubscribtionsOfCustomer(self, customer: Customer):
         pass
 
-    def checkAvailability(self, plan: Models.ExercisePlan, start: int, end: int):
+    def checkAvailability(self, plan: ExercisePlan, start: int, end: int) -> bool:
         if not plan.getTrainer().checkAvailability(start, end):
             return False
         for item in plan.getPlanItems():

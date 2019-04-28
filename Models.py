@@ -62,6 +62,7 @@ class Trainer(eModel):
         self.__workStart = workStart
         self.__workEnd = workEnd
         self.__assignments = []
+        self.__subscribtions = []
 
     def setGymHall(self, hall):
         start, end = hall.getOpenTime()
@@ -90,6 +91,15 @@ class Trainer(eModel):
             return False
         self.__assignments.append((start, end))
         return True
+    
+    def addSubscribtion(self, subscription):
+        self.__subscribtions.append(subscription)
+
+    def removeSubscribtion(self, subscription):
+        self.__subscribtions.remove(subscription)
+
+    def getAllSubscribtions(self):
+        return self.__subscribtions.__iter__()
     
     def checkAvailability(self, start: int, end: int):
         if start <= self.__workStart or end >= self.__workEnd:
