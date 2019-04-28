@@ -19,10 +19,18 @@ class Controller():
         return self.__customers.__iter__()
 
     def createHall(self, name: str) -> GymHall:
-        pass
+        hall = GymHall(len(self.__halls), name)
+        self.__halls.append(hall)
+        return hall
 
     def createPlan(self, trainer: Trainer, equipment: list, duration: list, steps: list) -> ExercisePlan:
-        pass
+        ExerciseItem = []
+        for i in range(len(equipment)):
+            ExerciseItem.append(Models.ExercisePlanItem(equipment[i], duration[i], steps[i]))
+
+        Plan = Models.ExercisePlan(len(Models.GymHall.getAllExercisePlans()), ExerciseItem, trainer)
+        Models.GymHall.addExercisePlan(Plan)
+        return Plan
 
     def createTrainer(self, name: str, workStart: int, workEnd: int, hall: GymHall) -> Trainer:
         trainer = Models.Trainer(len(hall.__trainers), name, workStartm, workStart)
