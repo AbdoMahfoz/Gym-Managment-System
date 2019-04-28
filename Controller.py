@@ -43,8 +43,7 @@ class Controller():
             return False
         plan.getTrainer().assignToCustomer(dailyStart, dailyEnd)
         for item in plan.getPlanItems():
-            for equipment in item.getEquipment():
-                equipment.reserveEquipment(dailyStart, dailyEnd)
+            item.getEquipment().reserveEquipment(dailyStart, dailyEnd)
         subscription = Models.Subscription(len(customer.getSubscribtions()), plan, reservationDate, dailyStart, dailyEnd)
         customer.subscribe(subscription)
 
@@ -55,7 +54,6 @@ class Controller():
         if not plan.getTrainer().checkAvailability(start, end):
             return False
         for item in plan.getPlanItems():
-            for equipment in item.getEquipment():
-                if not equipment.checkAvailability(start, end):
-                    return False
+            if not item.getEquipment().checkAvailability(start, end):
+                return False
         return True
