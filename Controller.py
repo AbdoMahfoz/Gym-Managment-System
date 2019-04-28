@@ -37,11 +37,25 @@ class Controller():
     def createCustomer(self, name: str):
         pass
 
-    def subscribeCustomer(self, customer: Models.Customer, plan: Models.ExercisePlan) -> bool:
-        pass
+    def subscribeCustomer(self, customer: Models.Customer, plan: Models.ExercisePlan,
+                                dailyStart: int, dailyEnd: int, reservationDate: Models.datetime) -> bool:
+        if not self.checkAvailability(plan, dailyStart, dailyEnd):
+            return False
+        plan.getTrainer().assignToCustomer(dailyStart, dailyEnd)
+        for item in plan.getPlanItems():
+            for equipment in item.getEquipment():
+                equipment.reserveEquipment(dailyStart, dailyEnd)
+        subscription = Models.Subscription(len(customer.getSubscribtions()), plan, reservationDate, dailyStart, dailyEnd)
+        customer.subscribe(subscription)
 
     def getSubscribtionsOfCustomer(self, customer: Models.Customer):
         pass
 
-    def checkAvailability(self, trainer: Models.Trainer, plan: Models.ExercisePlan, start: int, end: int):
-        pass
+    def checkAvailability(self, plan: Models.ExercisePlan, start: int, end: int):
+        if not plan.getTrainer().checkAvailability(start, end):
+            return False
+        for item in plan.getPlanItems():
+            for equipment in item.getEquipment():
+                if not equipment.checkAvailability(start, end):
+                    return False
+        return True
