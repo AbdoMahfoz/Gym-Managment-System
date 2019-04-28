@@ -25,10 +25,15 @@ class Controller():
         pass
 
     def createTrainer(self, name: str, workStart: int, workEnd: int, hall: GymHall) -> Trainer:
-        pass
+        trainer = Models.Trainer(len(hall.__trainers), name, workStartm, workStart)
+        trainer.setGymHall(hall)
+        hall.addTrainer(trainer)
+        return trainer
 
     def createCustomer(self, name: str) -> Customer:
-        pass
+        customer = Models.Customer(len(self.__customers), name)
+        self.__customers.append(customer)
+        return customer
 
     def subscribeCustomer(self, customer: Customer, plan: ExercisePlan,
                                 dailyStart: int, dailyEnd: int, reservationDate: datetime) -> bool:
@@ -42,7 +47,7 @@ class Controller():
         plan.getTrainer().addSubscribtion(subscription)
 
     def getSubscribtionsOfCustomer(self, customer: Customer):
-        pass
+        return customer.getSubscribtions()
 
     def checkAvailability(self, plan: ExercisePlan, start: int, end: int) -> bool:
         if not plan.getTrainer().checkAvailability(start, end):
