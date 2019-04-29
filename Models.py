@@ -63,6 +63,7 @@ class Trainer(eModel):
         self.__workEnd = workEnd
         self.__assignments = []
         self.__subscribtions = []
+        self.__excersiePlans = []
 
     def setGymHall(self, hall):
         start, end = hall.getOpenTime()
@@ -112,6 +113,11 @@ class Trainer(eModel):
     def clearAssignment(self, start: int, end: int):
         self.__assignments.remove((start, end))
 
+    def addExercisePlan(self, plan):
+        self.__excersiePlans.append(plan)
+
+    def getAllExcercisePlans(self):
+        return self.__excersiePlans.__iter__()
 
 class ExercisePlanItem(Model):
     def __init__(self, equipment: Equipment, duration: int, steps: list):
@@ -152,7 +158,6 @@ class GymHall(eModel):
         self.__openStart = int()
         self.__openEnd = int()
         self.__equipments = []
-        self.__exercisePlans = []
 
     def addTrainer(self, trainer: Trainer):
         self.__trainers.append(trainer)
@@ -185,14 +190,11 @@ class GymHall(eModel):
     def getAllEquipments(self):
         return self.__equipments.__iter__()
 
-    def addExercisePlan(self, plan: ExercisePlan):
-        self.__exercisePlans.append(plan)
-
-    def removeExercisePlan(self, plan: ExercisePlan):
-        self.__exercisePlans.remove(plan)
-
     def getAllExercisePlans(self):
-        return self.__exercisePlans.__iter__()
+        res = []
+        for trainer in self.__trainers:
+            res.extend(trainer.getAllExcercisePlans())
+        return res.__iter__()
 
 
 class Subscription(Model):

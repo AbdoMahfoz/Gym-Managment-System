@@ -1,4 +1,4 @@
-from Models import Trainer, GymHall, ExercisePlan, Customer, datetime, Subscription
+from Models import Trainer, GymHall, ExercisePlan, ExercisePlanItem, Customer, datetime, Subscription
 
 
 class Controller():
@@ -26,20 +26,19 @@ class Controller():
     def createPlan(self, trainer: Trainer, equipment: list, duration: list, steps: list) -> ExercisePlan:
         ExerciseItem = []
         for i in range(len(equipment)):
-            ExerciseItem.append(Models.ExercisePlanItem(equipment[i], duration[i], steps[i]))
-
-        Plan = Models.ExercisePlan(len(Models.GymHall.getAllExercisePlans()), ExerciseItem, trainer)
-        Models.GymHall.addExercisePlan(Plan)
+            ExerciseItem.append(ExercisePlanItem(equipment[i], duration[i], steps[i]))
+        Plan = ExercisePlan(len(trainer.getGymHall().getAllExercisePlans()), ExerciseItem, trainer)
+        trainer.addExercisePlan(Plan)
         return Plan
 
     def createTrainer(self, name: str, workStart: int, workEnd: int, hall: GymHall) -> Trainer:
-        trainer = Models.Trainer(len(hall.__trainers), name, workStartm, workStart)
+        trainer = Trainer(len(hall.getTrainers()), name, workStart, workStart)
         trainer.setGymHall(hall)
         hall.addTrainer(trainer)
         return trainer
 
     def createCustomer(self, name: str) -> Customer:
-        customer = Models.Customer(len(self.__customers), name)
+        customer = Customer(len(self.__customers), name)
         self.__customers.append(customer)
         return customer
 
@@ -53,9 +52,6 @@ class Controller():
         subscription = Subscription(len(customer.getSubscribtions()), plan, reservationDate, dailyStart, dailyEnd)
         customer.subscribe(subscription)
         plan.getTrainer().addSubscribtion(subscription)
-
-    def getSubscribtionsOfCustomer(self, customer: Customer):
-        return customer.getSubscribtions()
 
     def checkAvailability(self, plan: ExercisePlan, start: int, end: int) -> bool:
         if not plan.getTrainer().checkAvailability(start, end):
