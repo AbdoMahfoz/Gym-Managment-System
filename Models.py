@@ -77,7 +77,7 @@ class Trainer(eModel):
 
     def setWorkTimes(self, workStart: int, workEnd: int):
         start, end = self.getGymHall().getOpenTime()
-        if self.__workStart <= start or self.__workEnd >= end:
+        if workStart <= start or workEnd >= end:
             raise Exception("Trainer work time is incompatible with hall's open time")
         self.__workStart = workStart
         self.__workEnd = workEnd
