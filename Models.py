@@ -351,3 +351,35 @@ class Offers():
 
     def getObservers(self):
         return self.__observers.__iter__()
+
+class Admin():
+    __instance = None
+    __admins = []
+
+    def __init__(self, userName: str, password: str):
+        if not (Admin.__instance is None):
+            raise Exception("An instance is already created")
+        Admin.__instance = self
+        self.__userName = userName
+        self.__password = password
+
+    def getUsername(self):
+        return self.__userName
+
+    def getPassword(self):
+        return self.__password
+
+    @staticmethod
+    def fill(admins):
+        Admin.__admins.extend(admins)
+
+    @staticmethod
+    def get():
+        return Admin.__instance
+    
+    @staticmethod
+    def login(userName: str, password: str):
+        for admin in Admin.__admins:
+            if admin == (userName, password):
+                return Admin(userName, password)
+        return None
