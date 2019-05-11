@@ -1,5 +1,6 @@
 from datetime import datetime
-
+from abc import ABC
+from abc import abstractmethod
 
 class Model():
     def __init__(self, id: int):
@@ -197,13 +198,40 @@ class GymHall(eModel):
         return res.__iter__()
 
 
+class SubscriptionType(ABC):
+    @abstractmethod
+    def checkExpiration(self, reservationDate: datetime):
+        pass
+
+class SilverSubscription(SubscriptionType):
+    def checkExpiration(self, reservationDate: datetime):
+        if (datetime.now() - reservationDate).month >= 1:
+            return False
+        return True
+
+class GoldSubscription(SubscriptionType):
+    def checkExpiration(self, reservationDate: datetime):
+        if (datetime.now() - reservationDate).month >= 1 and (datetime.now() - reservationDate).day >= 7:
+            return False
+        return True
+
 class Subscription(Model):
-    def __init__(self, id: int, plan: ExercisePlan, reservationDate: datetime, dailyStart: int, dailyEnd: int):
+    def __init__(self, id: int, subscriptionType: SubscriptionType, plan: ExercisePlan,
+                                reservationDate: datetime, dailyStart: int, dailyEnd: int):
         super().__init__(id)
+        self.__subscriptionType = subscriptionType
         self.__plan = plan
         self.__reservationDate = reservationDate
         self.__dailyStart = dailyStart
         self.__dailyEnd = dailyEnd
+
+    def validateExpiration(self):
+        if not self.__subscriptionType.checkExpiration(self.__reservationDate):
+            self.__plan.getTrainer().clearAssignment(self.__dailyStart, self.__dailyEnd)
+            for equipment in self.__plan.getPlanItems():
+                equipment.getEquipment().clearReservation(self.__dailyStart, self.__dailyEnd)
+            return False
+        return True
 
     def getHall(self):
         return self.getTrainer().getGymHall()
