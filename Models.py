@@ -215,10 +215,64 @@ class GoldSubscription(SubscriptionType):
             return False
         return True
 
+class SubscriptionState(ABC):
+    @abstractmethod
+    def getHall(self, hall):
+        pass
+
+    @abstractmethod
+    def getTrainer(self, trainer):
+        pass
+    
+    @abstractmethod
+    def getExercisePlan(self, plan):
+        pass
+
+    @abstractmethod
+    def getReservationTime(self, reservationDate):
+        pass
+
+    @abstractmethod
+    def getDailyTime(self, dailyStart, dailyEnd):
+        pass
+
+class ActiveSubscription(SubscriptionState):
+    def getHall(self, hall):
+        return hall
+    
+    def getDailyTime(self, dailyStart, dailyEnd):
+        return (dailyStart, dailyEnd)
+    
+    def getExercisePlan(self, plan):
+        return plan
+    
+    def getReservationTime(self, reservationDate):
+        return reservationDate
+
+    def getTrainer(self, trainer):
+        return trainer
+
+class ExpiredSubscription(SubscriptionState):
+    def getHall(self, hall):
+        return None
+    
+    def getDailyTime(self, dailyStart, dailyEnd):
+        return None
+    
+    def getExercisePlan(self, plan):
+        return None
+    
+    def getReservationTime(self, reservationDate):
+        return None
+
+    def getTrainer(self, trainer):
+        return None
+
 class Subscription(Model):
     def __init__(self, id: int, subscriptionType: SubscriptionType, plan: ExercisePlan,
                                 reservationDate: datetime, dailyStart: int, dailyEnd: int):
         super().__init__(id)
+        self.__state = ActiveSubscription()
         self.__subscriptionType = subscriptionType
         self.__plan = plan
         self.__reservationDate = reservationDate
@@ -226,27 +280,30 @@ class Subscription(Model):
         self.__dailyEnd = dailyEnd
 
     def validateExpiration(self):
+        if type(self.__state) == type(ExpiredSubscription()):
+            return False
         if not self.__subscriptionType.checkExpiration(self.__reservationDate):
             self.__plan.getTrainer().clearAssignment(self.__dailyStart, self.__dailyEnd)
             for equipment in self.__plan.getPlanItems():
                 equipment.getEquipment().clearReservation(self.__dailyStart, self.__dailyEnd)
+            self.__state = ExpiredSubscription()
             return False
         return True
 
     def getHall(self):
-        return self.getTrainer().getGymHall()
+        return self.__state.getHall(self.__plan.getGymHall())
 
     def getTrainer(self):
-        return self.__plan.getTrainer()
+        return self.__state.getTrainer(self.__plan.getTrainer())
 
     def getExercisePlan(self):
-        return self.__plan
+        return self.__state.getExercisePlan(self.__plan)
 
     def getReservationTime(self):
-        return self.__reservationDate
+        return self.__state.getReservationTime(self.__reservationDate)
 
     def getDailyTime(self):
-        return (self.__dailyStart, self.__dailyEnd)
+        return self.__state.getDailyTime(self.__dailyStart, self.__dailyEnd)
 
 
 class Customer(eModel):
