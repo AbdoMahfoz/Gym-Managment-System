@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'c:\Users\fatma\Desktop\Gym Managment System\Ui\MainWindow.ui'
+# Form implementation generated from reading ui file 'd:\Projects\Gym Managment System\Ui\MainWindow.ui'
 #
-# Created by: PyQt5 UI code generator 5.12.2
+# Created by: PyQt5 UI code generator 5.11.3
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -21,57 +20,57 @@ class Ui_MainWindow(object):
         self.stackedWidget.setObjectName("stackedWidget")
         self.page_4 = QtWidgets.QWidget()
         self.page_4.setObjectName("page_4")
+        self.listWidget_2 = QtWidgets.QListWidget(self.page_4)
+        self.listWidget_2.setGeometry(QtCore.QRect(30, 70, 331, 361))
+        self.listWidget_2.setObjectName("listWidget_2")
+        self.pushButton_5 = QtWidgets.QPushButton(self.page_4)
+        self.pushButton_5.setGeometry(QtCore.QRect(260, 440, 101, 21))
+        self.pushButton_5.setObjectName("pushButton_5")
         self.label_5 = QtWidgets.QLabel(self.page_4)
-        self.label_5.setGeometry(QtCore.QRect(50, 40, 121, 21))
+        self.label_5.setGeometry(QtCore.QRect(30, 20, 261, 41))
         font = QtGui.QFont()
         font.setPointSize(24)
         self.label_5.setFont(font)
         self.label_5.setObjectName("label_5")
-        self.listWidget_5 = QtWidgets.QListWidget(self.page_4)
-        self.listWidget_5.setGeometry(QtCore.QRect(50, 80, 256, 192))
-        self.listWidget_5.setObjectName("listWidget_5")
-        self.pushButton_3 = QtWidgets.QPushButton(self.page_4)
-        self.pushButton_3.setGeometry(QtCore.QRect(235, 290, 71, 20))
-        self.pushButton_3.setObjectName("pushButton_3")
         self.stackedWidget.addWidget(self.page_4)
         self.page = QtWidgets.QWidget()
         self.page.setObjectName("page")
         self.listWidget = QtWidgets.QListWidget(self.page)
-        self.listWidget.setGeometry(QtCore.QRect(30, 50, 331, 271))
+        self.listWidget.setGeometry(QtCore.QRect(30, 70, 331, 361))
         self.listWidget.setObjectName("listWidget")
         self.label = QtWidgets.QLabel(self.page)
-        self.label.setGeometry(QtCore.QRect(30, 10, 191, 21))
+        self.label.setGeometry(QtCore.QRect(30, 20, 261, 41))
         font = QtGui.QFont()
         font.setPointSize(24)
         self.label.setFont(font)
         self.label.setObjectName("label")
         self.pushButton_4 = QtWidgets.QPushButton(self.page)
-        self.pushButton_4.setGeometry(QtCore.QRect(290, 330, 71, 21))
+        self.pushButton_4.setGeometry(QtCore.QRect(260, 440, 101, 21))
         self.pushButton_4.setObjectName("pushButton_4")
         self.stackedWidget.addWidget(self.page)
         self.page_2 = QtWidgets.QWidget()
         self.page_2.setObjectName("page_2")
         self.label_2 = QtWidgets.QLabel(self.page_2)
-        self.label_2.setGeometry(QtCore.QRect(340, 140, 211, 31))
+        self.label_2.setGeometry(QtCore.QRect(350, 170, 251, 41))
         font = QtGui.QFont()
         font.setPointSize(24)
         self.label_2.setFont(font)
         self.label_2.setObjectName("label_2")
         self.label_3 = QtWidgets.QLabel(self.page_2)
-        self.label_3.setGeometry(QtCore.QRect(20, 20, 171, 31))
+        self.label_3.setGeometry(QtCore.QRect(20, 10, 171, 41))
         font = QtGui.QFont()
         font.setPointSize(24)
         self.label_3.setFont(font)
         self.label_3.setObjectName("label_3")
         self.listWidget_3 = QtWidgets.QListWidget(self.page_2)
-        self.listWidget_3.setGeometry(QtCore.QRect(20, 50, 256, 211))
+        self.listWidget_3.setGeometry(QtCore.QRect(20, 60, 256, 211))
         self.listWidget_3.setObjectName("listWidget_3")
         self.label_4 = QtWidgets.QLabel(self.page_2)
         self.label_4.setGeometry(QtCore.QRect(330, 40, 35, 10))
         self.label_4.setText("")
         self.label_4.setObjectName("label_4")
         self.label_6 = QtWidgets.QLabel(self.page_2)
-        self.label_6.setGeometry(QtCore.QRect(20, 290, 141, 21))
+        self.label_6.setGeometry(QtCore.QRect(20, 290, 191, 31))
         font = QtGui.QFont()
         font.setPointSize(24)
         self.label_6.setFont(font)
@@ -80,7 +79,7 @@ class Ui_MainWindow(object):
         self.listWidget_4.setGeometry(QtCore.QRect(20, 330, 256, 211))
         self.listWidget_4.setObjectName("listWidget_4")
         self.tableWidget = QtWidgets.QTableWidget(self.page_2)
-        self.tableWidget.setGeometry(QtCore.QRect(340, 190, 256, 211))
+        self.tableWidget.setGeometry(QtCore.QRect(350, 220, 256, 231))
         self.tableWidget.setObjectName("tableWidget")
         self.tableWidget.setColumnCount(0)
         self.tableWidget.setRowCount(0)
@@ -88,7 +87,7 @@ class Ui_MainWindow(object):
         self.dateTimeEdit.setGeometry(QtCore.QRect(560, 20, 194, 22))
         self.dateTimeEdit.setObjectName("dateTimeEdit")
         self.label_7 = QtWidgets.QLabel(self.page_2)
-        self.label_7.setGeometry(QtCore.QRect(420, 20, 141, 20))
+        self.label_7.setGeometry(QtCore.QRect(360, 10, 191, 31))
         font = QtGui.QFont()
         font.setPointSize(24)
         self.label_7.setFont(font)
@@ -100,10 +99,10 @@ class Ui_MainWindow(object):
         self.pushButton_2.setGeometry(QtCore.QRect(670, 90, 91, 21))
         self.pushButton_2.setObjectName("pushButton_2")
         self.stackedWidget.addWidget(self.page_2)
-        self.gridLayout.addWidget(self.stackedWidget, 1, 0, 1, 1)
+        self.gridLayout.addWidget(self.stackedWidget, 0, 0, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 805, 18))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 805, 21))
         self.menubar.setObjectName("menubar")
         self.menuFile = QtWidgets.QMenu(self.menubar)
         self.menuFile.setObjectName("menuFile")
@@ -120,14 +119,14 @@ class Ui_MainWindow(object):
         self.menubar.addAction(self.menuFile.menuAction())
 
         self.retranslateUi(MainWindow)
-        self.stackedWidget.setCurrentIndex(0)
+        self.stackedWidget.setCurrentIndex(2)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.label_5.setText(_translate("MainWindow", "Customers:"))
-        self.pushButton_3.setText(_translate("MainWindow", "Select Customer"))
+        self.pushButton_5.setText(_translate("MainWindow", "Select Customer"))
+        self.label_5.setText(_translate("MainWindow", "Choose Customer:"))
         self.label.setText(_translate("MainWindow", "Choose Gym Hall:"))
         self.pushButton_4.setText(_translate("MainWindow", "Select Gym Hall"))
         self.label_2.setText(_translate("MainWindow", "Plan Detals:"))
@@ -139,5 +138,4 @@ class Ui_MainWindow(object):
         self.menuFile.setTitle(_translate("MainWindow", "File"))
         self.actionSave.setText(_translate("MainWindow", "Save"))
         self.actionExit.setText(_translate("MainWindow", "Exit"))
-
 

@@ -15,19 +15,42 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="1" column="0">
+    <item row="0" column="0">
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="page_4">
+       <widget class="QListWidget" name="listWidget_2">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>70</y>
+          <width>331</width>
+          <height>361</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_5">
+        <property name="geometry">
+         <rect>
+          <x>260</x>
+          <y>440</y>
+          <width>101</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Select Customer</string>
+        </property>
+       </widget>
        <widget class="QLabel" name="label_5">
         <property name="geometry">
          <rect>
-          <x>50</x>
-          <y>40</y>
-          <width>121</width>
-          <height>21</height>
+          <x>30</x>
+          <y>20</y>
+          <width>261</width>
+          <height>41</height>
          </rect>
         </property>
         <property name="font">
@@ -36,30 +59,7 @@
          </font>
         </property>
         <property name="text">
-         <string>Customers:</string>
-        </property>
-       </widget>
-       <widget class="QListWidget" name="listWidget_5">
-        <property name="geometry">
-         <rect>
-          <x>50</x>
-          <y>80</y>
-          <width>256</width>
-          <height>192</height>
-         </rect>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="pushButton_3">
-        <property name="geometry">
-         <rect>
-          <x>235</x>
-          <y>290</y>
-          <width>71</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Select Customer</string>
+         <string>Choose Customer:</string>
         </property>
        </widget>
       </widget>
@@ -68,9 +68,9 @@
         <property name="geometry">
          <rect>
           <x>30</x>
-          <y>50</y>
+          <y>70</y>
           <width>331</width>
-          <height>271</height>
+          <height>361</height>
          </rect>
         </property>
        </widget>
@@ -78,9 +78,9 @@
         <property name="geometry">
          <rect>
           <x>30</x>
-          <y>10</y>
-          <width>191</width>
-          <height>21</height>
+          <y>20</y>
+          <width>261</width>
+          <height>41</height>
          </rect>
         </property>
         <property name="font">
@@ -95,9 +95,9 @@
        <widget class="QPushButton" name="pushButton_4">
         <property name="geometry">
          <rect>
-          <x>290</x>
-          <y>330</y>
-          <width>71</width>
+          <x>260</x>
+          <y>440</y>
+          <width>101</width>
           <height>21</height>
          </rect>
         </property>
@@ -110,10 +110,10 @@
        <widget class="QLabel" name="label_2">
         <property name="geometry">
          <rect>
-          <x>340</x>
-          <y>140</y>
-          <width>211</width>
-          <height>31</height>
+          <x>350</x>
+          <y>170</y>
+          <width>251</width>
+          <height>41</height>
          </rect>
         </property>
         <property name="font">
@@ -129,9 +129,9 @@
         <property name="geometry">
          <rect>
           <x>20</x>
-          <y>20</y>
+          <y>10</y>
           <width>171</width>
-          <height>31</height>
+          <height>41</height>
          </rect>
         </property>
         <property name="font">
@@ -147,7 +147,7 @@
         <property name="geometry">
          <rect>
           <x>20</x>
-          <y>50</y>
+          <y>60</y>
           <width>256</width>
           <height>211</height>
          </rect>
@@ -171,8 +171,8 @@
          <rect>
           <x>20</x>
           <y>290</y>
-          <width>141</width>
-          <height>21</height>
+          <width>191</width>
+          <height>31</height>
          </rect>
         </property>
         <property name="font">
@@ -197,10 +197,10 @@
        <widget class="QTableWidget" name="tableWidget">
         <property name="geometry">
          <rect>
-          <x>340</x>
-          <y>190</y>
+          <x>350</x>
+          <y>220</y>
           <width>256</width>
-          <height>211</height>
+          <height>231</height>
          </rect>
         </property>
        </widget>
@@ -217,10 +217,10 @@
        <widget class="QLabel" name="label_7">
         <property name="geometry">
          <rect>
-          <x>420</x>
-          <y>20</y>
-          <width>141</width>
-          <height>20</height>
+          <x>360</x>
+          <y>10</y>
+          <width>191</width>
+          <height>31</height>
          </rect>
         </property>
         <property name="font">
@@ -269,7 +269,7 @@
      <x>0</x>
      <y>0</y>
      <width>805</width>
-     <height>18</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
