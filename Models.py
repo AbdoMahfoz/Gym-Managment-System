@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from abc import ABC
 from abc import abstractmethod
 
@@ -210,13 +210,13 @@ class SubscriptionType(ABC):
 
 class SilverSubscription(SubscriptionType):
     def checkExpiration(self, reservationDate: datetime):
-        if (datetime.now() - reservationDate).month >= 1:
+        if (datetime.now() - reservationDate) >= timedelta(days=30):
             return False
         return True
 
 class GoldSubscription(SubscriptionType):
     def checkExpiration(self, reservationDate: datetime):
-        if (datetime.now() - reservationDate).month >= 1 and (datetime.now() - reservationDate).day >= 7:
+        if (datetime.now() - reservationDate) >= timedelta(days=45):
             return False
         return True
 
