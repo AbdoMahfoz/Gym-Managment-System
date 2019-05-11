@@ -6,11 +6,37 @@ class Controller():
         self.__halls = []
         self.__customers = []
 
-    def readFromFile(self, fileName):
-        pass
+    def readFromFile(self, fileName: str):
+        return
+        try:
+            file = open(fileName, "r")
+            for line in file:
+                for tokens in line.split(' '):
+                    pass
+        except:
+            pass
 
-    def writeToFile(self, fileName):
-        pass
+    def writeToFile(self, fileName: str):
+        return
+        trainers = []
+        equipment = []
+        for hall in self.__halls:
+            trainers.extend(hall.getTrainers())
+            equipment.extend(hall.getAllEquipments())
+        file = open(fileName, "w")
+        for hall in self.__halls:
+            hallStart, hallFinish = hall.getOpenTime()
+            file.write("{0} {1} {2} {3}\n".format(str(hall.getId()), hall.getName(), str(hallStart), str(hallFinish)))
+            file.write("{0}\n".format(len(hall.getTrainers())))
+            for trainer in hall.getTrainers():
+                file.write()
+        file.write("customers\n")
+        for customer in self.__customers:
+            file.write("{0} {1}\n".format(str(customer.getId()), str(customer.getName())))
+            for sub in customer.getSubscribtions():
+                file.write("{0}\n".format(sub.getId()))
+            file.write("\n")
+        
 
     def getAllHalls(self):
         return self.__halls.__iter__()

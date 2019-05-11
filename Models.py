@@ -283,12 +283,15 @@ class Subscription(Model):
         if type(self.__state) == type(ExpiredSubscription()):
             return False
         if not self.__subscriptionType.checkExpiration(self.__reservationDate):
-            self.__plan.getTrainer().clearAssignment(self.__dailyStart, self.__dailyEnd)
-            for equipment in self.__plan.getPlanItems():
-                equipment.getEquipment().clearReservation(self.__dailyStart, self.__dailyEnd)
-            self.__state = ExpiredSubscription()
+            self.clearSubscription()
             return False
         return True
+
+    def clearSubscription(self):
+        self.__plan.getTrainer().clearAssignment(self.__dailyStart, self.__dailyEnd)
+        for equipment in self.__plan.getPlanItems():
+            equipment.getEquipment().clearReservation(self.__dailyStart, self.__dailyEnd)
+        self.__state = ExpiredSubscription()
 
     def getHall(self):
         return self.__state.getHall(self.__plan.getGymHall())
@@ -305,17 +308,46 @@ class Subscription(Model):
     def getDailyTime(self):
         return self.__state.getDailyTime(self.__dailyStart, self.__dailyEnd)
 
-
 class Customer(eModel):
-    def __init__(self, id: int, name: str):
+    def __init__(self, id: int, name: str, email: str):
         super().__init__(id, name)
         self.__subscriptions = []
+        self.__email = email
 
     def subscribe(self, subscription: Subscription):
         self.__subscriptions.append(subscription)
 
+    def notify(self, office: str):
+        #Email SMTP mn ra4ad
+        pass
+
     def cancelSubscribtion(self, subscription: Subscription):
         self.__subscriptions.remove(subscription)
 
+    def getEmail(self):
+        return self.__email
+
     def getSubscribtions(self):
         return self.__subscriptions.__iter__()
+
+class Offers():
+    def __init__(self):
+        self.__observers = []
+        self.__offers = []
+
+    def addOffer(self, offer: str):
+        self.__offers.append(offer)
+        for observer in self.__observers:
+            observer.notify(offer)
+
+    def addObserver(self, observer: Customer):
+        self.__observers.append(observer)
+        
+    def removeOffer(self, offer: str):
+        self.__offers.remove(offer)
+
+    def getOffers(self):
+        return self.__offers.__iter__()
+
+    def getObservers(self):
+        return self.__observers.__iter__()
