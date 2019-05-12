@@ -1,6 +1,7 @@
 from Ui.Ui_MainWindow import Ui_MainWindow
 from PyQt5 import QtWidgets, QtCore, QtGui
 from Controller import Controller
+from datetime import datetime
 
 
 class MainWindow(Ui_MainWindow):
@@ -45,6 +46,9 @@ class MainWindow(Ui_MainWindow):
         self.cancelSubscriptionButton.clicked.connect(self.__cancelSubscribtion)
         self.createCustomerButton.clicked.connect(self.__createCustomer)
         self.updateCustomerButton.clicked.connect(self.__updateCustomer)
+        self.subscribeGymHallComboBox.currentIndexChanged.connect(self.__subscribeGymSelectionChanged)
+        self.subscribeTrainerComboBox.currentIndexChanged.connect(self.__subscribeTrainerSelectinoChanged)
+        self.subcribeButton.clicked.connect(self.__subscribeButtonClicked)
 
     def __back(self):
         self.stackedWidget.setCurrentWidget(self.homePage)
@@ -64,6 +68,7 @@ class MainWindow(Ui_MainWindow):
             self.stackedWidget.setCurrentWidget(self.exercisePlanPage)
         elif btn == "Subcribe a customer to a plan":
             self.stackedWidget.setCurrentWidget(self.subscribePage)
+            self.__subscribeInitialize()
         else:
             raise Exception(f"{btn}")
 
@@ -113,3 +118,43 @@ class MainWindow(Ui_MainWindow):
                 self.__controller.cancelSubscribtion(cust, sub)
                 break
         self.subscriptionsGrid.takeItem(self.subscriptionsGrid.row(self.subscriptionsGrid.selectedItems()[0]))
+
+    def __subscribeInitialize(self):
+        self.subscribeCustomerComboBox.clear()
+        self.subscribeGymHallComboBox.clear()
+        custs = []
+        for i in self.__custDict.values():
+            custs.append(i.getName())
+        self.subscribeCustomerComboBox.addItems(custs)
+        halls = []
+        for i in self.__hallDict.values():
+            halls.append(i.getName())
+        self.subscribeGymHallComboBox.addItems(halls)
+
+    def __subscribeGymSelectionChanged(self, something):
+        self.subscribeTrainerComboBox.clear()
+        hall = self.__hallDict[self.subscribeGymHallComboBox.currentText()]
+        trainers = []
+        for trainer in hall.getTrainers():
+            trainers.append(trainer.getName())
+        self.subscribeTrainerComboBox.addItems(trainers)
+
+    def __subscribeTrainerSelectinoChanged(self, something):
+        self.subscribeExercisePlanComboBox.clear()
+        hall = self.__hallDict[self.subscribeGymHallComboBox.currentText()]
+        plans = []
+        for trainer in hall.getTrainers():
+            if trainer.getName() == self.subscribeTrainerComboBox.currentText():
+                for plan in trainer.getAllExcercisePlans():
+                    plans.append(str(plan.getId()))
+        self.subscribeExercisePlanComboBox.addItems(plans)
+
+    def __subscribeButtonClicked(self):
+        cust = self.__custDict[self.subscribeCustomerComboBox.currentText()]
+        hall = self.__hallDict[self.subscribeGymHallComboBox.currentText()]
+        for trainer in hall.getTrainers():
+            if trainer.getName() == self.subscribeTrainerComboBox.currentText():
+                for plan in trainer.getAllExcercisePlans():
+                    if plan.getId() == int(self.subscribeExercisePlanComboBox.currentText()):
+                        self.__controller.subscribeCustomer(cust, plan, str.lower(self.subscribeCustomerComboBox_2.currentText),
+                            self.subscribeDailyStart.value(), self.subscribeDailyEnd.value(), datetime.now())

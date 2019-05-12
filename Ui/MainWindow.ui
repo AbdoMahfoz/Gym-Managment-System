@@ -18,7 +18,7 @@
     <item row="0" column="0">
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>6</number>
       </property>
       <widget class="QWidget" name="homePage">
        <widget class="QGroupBox" name="groupBox">
@@ -1009,16 +1009,6 @@
          <string>Exercise Plan</string>
         </property>
        </widget>
-       <widget class="QTimeEdit" name="subscribeDailyStart">
-        <property name="geometry">
-         <rect>
-          <x>360</x>
-          <y>280</y>
-          <width>121</width>
-          <height>22</height>
-         </rect>
-        </property>
-       </widget>
        <widget class="QLabel" name="label_7">
         <property name="geometry">
          <rect>
@@ -1030,16 +1020,6 @@
         </property>
         <property name="text">
          <string>Daily Start</string>
-        </property>
-       </widget>
-       <widget class="QTimeEdit" name="subscribeDailyEnd">
-        <property name="geometry">
-         <rect>
-          <x>360</x>
-          <y>320</y>
-          <width>121</width>
-          <height>22</height>
-         </rect>
         </property>
        </widget>
        <widget class="QLabel" name="label_27">
@@ -1133,6 +1113,59 @@
         </property>
         <property name="text">
          <string>Back</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_30">
+        <property name="geometry">
+         <rect>
+          <x>290</x>
+          <y>80</y>
+          <width>47</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Type</string>
+        </property>
+       </widget>
+       <widget class="QComboBox" name="subscribeCustomerComboBox_2">
+        <property name="geometry">
+         <rect>
+          <x>360</x>
+          <y>80</y>
+          <width>121</width>
+          <height>22</height>
+         </rect>
+        </property>
+        <item>
+         <property name="text">
+          <string>Gold</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Silver</string>
+         </property>
+        </item>
+       </widget>
+       <widget class="QSpinBox" name="subscribeDailyStart">
+        <property name="geometry">
+         <rect>
+          <x>360</x>
+          <y>280</y>
+          <width>121</width>
+          <height>22</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QSpinBox" name="subscribeDailyEnd">
+        <property name="geometry">
+         <rect>
+          <x>360</x>
+          <y>320</y>
+          <width>121</width>
+          <height>22</height>
+         </rect>
         </property>
        </widget>
       </widget>
