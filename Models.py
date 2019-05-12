@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from abc import ABC
 from abc import abstractmethod
 
@@ -77,7 +77,7 @@ class Trainer(eModel):
 
     def setWorkTimes(self, workStart: int, workEnd: int):
         start, end = self.getGymHall().getOpenTime()
-        if self.__workStart <= start or self.__workEnd >= end:
+        if workStart <= start or workEnd >= end:
             raise Exception("Trainer work time is incompatible with hall's open time")
         self.__workStart = workStart
         self.__workEnd = workEnd
@@ -151,6 +151,11 @@ class ExercisePlan(Model):
     def getGymHall(self):
         return self.__trainer.getGymHall()
 
+    def getTotalDuration(self):
+        res = 0
+        for item in self.__planItems:
+            res = res + item.getDuration()
+        return res
 
 class GymHall(eModel):
     def __init__(self, id: int, name: str):
@@ -205,15 +210,24 @@ class SubscriptionType(ABC):
 
 class SilverSubscription(SubscriptionType):
     def checkExpiration(self, reservationDate: datetime):
-        if (datetime.now() - reservationDate).month >= 1:
+        if (datetime.now() - reservationDate) >= timedelta(days=30):
             return False
         return True
 
 class GoldSubscription(SubscriptionType):
     def checkExpiration(self, reservationDate: datetime):
-        if (datetime.now() - reservationDate).month >= 1 and (datetime.now() - reservationDate).day >= 7:
+        if (datetime.now() - reservationDate) >= timedelta(days=45):
             return False
         return True
+
+class SubscriptionTypeFactory():
+    def create(self, subscriptionType: str) -> SubscriptionType:
+        if subscriptionType == "gold":
+            return GoldSubscription()
+        elif subscriptionType == "silver":
+            return SilverSubscription()
+        else:
+            raise Exception("Invalid selection, only available two options are gold and silver")
 
 class SubscriptionState(ABC):
     @abstractmethod
