@@ -6,38 +6,33 @@ from Controller import Controller
 class MainWindow(Ui_MainWindow):
     def __init__(self):
         self.__controller = Controller()
-        self.__controller.readFromFile("data.txt")
-        self.__hallMap = {}
-        self.__currentHall = None
+        self.__custDict = {}
+        self.__hallDict = {}
+        self.__chosenHall = None
+        self.__chosenCustomer = None
+        for customer in self.__controller.getAllCustomers():
+            self.__custDict[f"{str(customer.getId())} - {customer.getName()}"] = customer
+        for hall in self.__controller.getAllHalls():
+            self.__hallDict[f"{str(hall.getId())} - {hall.getName()}"] = hall
 
     def onExit(self):
-        self.__controller.writeToFile("data.txt")
+        pass
 
     def initialize(self, MainWindow):
         self.window = MainWindow
         self.setSlots()
         self.stackedWidget.setCurrentIndex(0)
-        for hall in self.__controller.getAllHalls():
-            self.__hallMap[hall.getName()] = hall
-            item = QtWidgets.QListWidgetItem(hall.getName())
-            self.listWidget.addItem(item)
+        for cust in self.__custDict.keys():
+            self.gymHallGrid.addItem(cust)
+        for hall in self.__hallDict.keys():
+            self.customerGrid.addItem(hall)
 
     def setSlots(self):
-        self.chooseHallButton.clicked.connect(self.__hallChooseHandler)
-        self.listWidget.itemClicked.connect(self.__hallItemClicked)
-        self.createHallButton.clicked.connect(lambda: self.stackedWidget.setCurrentIndex(1))
-        self.createHallBackButton.clicked.connect(lambda: self.stackedWidget.setCurrentIndex(0))
-        self.finalCreateHallButton.clicked.connect(self.__createHallHandler)
+        self.gymHallGrid.itemClicked.connect(self.__hallChosen)
+        self.customerGrid.itemClicked.connect(self.__customerChosen)
 
-    def __createHallHandler(self):
-        self.__currentHall = self.__controller.createHall(self.createHallLineEdit.text())
-        self.stackedWidget.setCurrentIndex(2)
+    def __hallChosen(self, item):
+        self.__chosenHall = self.__hallDict[item.text()]
 
-    def __hallChooseHandler(self):
-        if self.__currentHall is not None:
-            self.stackedWidget.setCurrentIndex(2)
-        else:
-            QtWidgets.QMessageBox(QtWidgets.QMessageBox.Critical, "Error", "You must choose a hall", parent=self.window).show()
-
-    def __hallItemClicked(self, item):
-        self.__currentHall = self.__hallMap[item.text()]
+    def __customerChosen(self, item):
+        self.__chosenCustomer = self.__custDict[item.text()]
