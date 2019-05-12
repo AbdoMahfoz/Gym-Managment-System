@@ -73,6 +73,15 @@ class Controller():
         self.__customers.append(customer)
         return customer
 
+    def deleteCustomer(self, customer: Customer):
+        for sub in customer.getSubscribtions():
+            sub.clearSubscription()
+        self.__customers.remove(customer)
+
+    def cancelSubscribtion(self, customer: Customer, subscription: Subscription):
+        subscription.clearSubscription()
+        customer.cancelSubscribtion(subscription)
+
     def subscribeCustomer(self, customer: Customer, plan: ExercisePlan, subscriptionType: str,
                                 dailyStart: int, dailyEnd: int, reservationDate: datetime) -> bool:
         if not self.checkAvailability(plan, dailyStart, dailyEnd):

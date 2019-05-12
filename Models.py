@@ -341,6 +341,9 @@ class Customer(eModel):
     def getEmail(self):
         return self.__email
 
+    def setEmail(self, email):
+        self.__email = email
+
     def getSubscribtions(self):
         return self.__subscriptions.__iter__()
 
