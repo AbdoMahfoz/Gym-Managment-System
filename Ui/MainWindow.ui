@@ -15,10 +15,10 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="1">
+    <item row="0" column="0">
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>6</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="homePage">
        <widget class="QGroupBox" name="groupBox">
@@ -316,6 +316,19 @@
          <string>Cancel Subscription</string>
         </property>
        </widget>
+       <widget class="QPushButton" name="customerBack">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>510</y>
+          <width>75</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Back</string>
+        </property>
+       </widget>
       </widget>
       <widget class="QWidget" name="gymHallPage">
        <widget class="QListWidget" name="gymHallGrid">
@@ -406,6 +419,19 @@
         </property>
         <property name="text">
          <string>Update Hall</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="gymHallBack">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>520</y>
+          <width>75</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Back</string>
         </property>
        </widget>
       </widget>
@@ -521,6 +547,19 @@
         </property>
         <property name="text">
          <string>Gym Hall</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="equipmentsBack">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>520</y>
+          <width>75</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Back</string>
         </property>
        </widget>
       </widget>
@@ -684,6 +723,19 @@
          </rect>
         </property>
        </widget>
+       <widget class="QPushButton" name="trainersBack">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>520</y>
+          <width>75</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Back</string>
+        </property>
+       </widget>
       </widget>
       <widget class="QWidget" name="exercisePlanPage">
        <widget class="QLabel" name="label_20">
@@ -738,7 +790,7 @@
           <x>15</x>
           <y>190</y>
           <width>281</width>
-          <height>351</height>
+          <height>311</height>
          </rect>
         </property>
        </widget>
@@ -825,15 +877,15 @@
           <x>530</x>
           <y>310</y>
           <width>131</width>
-          <height>111</height>
+          <height>151</height>
          </rect>
         </property>
        </widget>
        <widget class="QPushButton" name="createExercisePlanButton">
         <property name="geometry">
          <rect>
-          <x>364</x>
-          <y>460</y>
+          <x>360</x>
+          <y>480</y>
           <width>151</width>
           <height>23</height>
          </rect>
@@ -846,7 +898,7 @@
         <property name="geometry">
          <rect>
           <x>610</x>
-          <y>460</y>
+          <y>480</y>
           <width>151</width>
           <height>23</height>
          </rect>
@@ -871,6 +923,19 @@
         </property>
         <property name="text">
          <string>Exercise Plan:</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="exercisePlanBack">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>520</y>
+          <width>75</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Back</string>
         </property>
        </widget>
       </widget>
@@ -1055,6 +1120,19 @@
         </property>
         <property name="text">
          <string>Subscribe:</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="subscibeBack">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>520</y>
+          <width>75</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Back</string>
         </property>
        </widget>
       </widget>
