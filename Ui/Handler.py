@@ -49,6 +49,13 @@ class MainWindow(Ui_MainWindow):
         self.subscribeGymHallComboBox.currentIndexChanged.connect(self.__subscribeGymSelectionChanged)
         self.subscribeTrainerComboBox.currentIndexChanged.connect(self.__subscribeTrainerSelectinoChanged)
         self.subcribeButton.clicked.connect(self.__subscribeButtonClicked)
+        self.checkAvailabilityButton.clicked.connect(self.__subscribeCheckClicked)
+        self.createHallButton.clicked.connect(self.__hallCreateClicked)
+        self.updateGymHall.clicked.connect(self.__hallUpdateClicked)
+        self.deleteGymHallButton.clicked.connect(self.__hallDeleteClicked)
+        self.gymHallGrid.itemClicked.connect(self.__hallGridSelected)
+        self.createEquipmentButton.clicked.connect(self.__createEquipment)
+        self.updateEquipmentButton.clicked.connect(self.__updateEquipment)
 
     def __back(self):
         self.stackedWidget.setCurrentWidget(self.homePage)
@@ -62,8 +69,10 @@ class MainWindow(Ui_MainWindow):
             self.stackedWidget.setCurrentWidget(self.trainersPage)
         elif btn == "Gym Halls":
             self.stackedWidget.setCurrentWidget(self.gymHallPage)
+            self.__initializeGymHall()
         elif btn == "Equipments":
             self.stackedWidget.setCurrentWidget(self.equipmentsPage)
+            self.__initializeEquipments()
         elif btn == "Exercise Plans":
             self.stackedWidget.setCurrentWidget(self.exercisePlanPage)
         elif btn == "Subcribe a customer to a plan":
@@ -158,3 +167,57 @@ class MainWindow(Ui_MainWindow):
                     if plan.getId() == int(self.subscribeExercisePlanComboBox.currentText()):
                         self.__controller.subscribeCustomer(cust, plan, str.lower(self.subscribeCustomerComboBox_2.currentText),
                             self.subscribeDailyStart.value(), self.subscribeDailyEnd.value(), datetime.now())
+
+    def __subscribeCheckClicked(self):
+        hall = self.__hallDict[self.subscribeGymHallComboBox.currentText()]
+        for trainer in hall.getTrainers():
+            if trainer.getName() == self.subscribeTrainerComboBox.currentText():
+                for plan in trainer.getAllExcercisePlans():
+                    if plan.getId() == int(self.subscribeExercisePlanComboBox.currentText()):
+                        return self.__controller.checkAvailability(plan, self.subscribeDailyStart, self.subscribeDailyEnd)
+        return False
+
+    def __initializeGymHall(self):
+        self.gymHallGrid.clear()
+        for i in self.__controller.getAllHalls():
+            self.gymHallGrid.addItem(i.getName())
+
+    def __hallCreateClicked(self):
+        self.__controller.createHall(self.nameGymHallEdit.text())
+        self.gymHallGrid.addItem(self.nameGymHallEdit.text())
+        self.nameGymHallEdit.setText("")
+
+    def __hallUpdateClicked(self):
+        for hall in self.__controller.getAllHalls():
+            if hall.getName() == self.gymHallGrid.selectedItems()[0].text():
+                hall.setName(self.nameGymHallEdit.text())
+                self.gymHallGrid.selectedItems()[0].setText(hall.getName())
+                break
+
+    def __hallDeleteClicked(self):
+        for hall in self.__controller.getAllHalls():
+            if hall.getName() == self.gymHallGrid.selectedItems()[0].text():
+                self.__controller.deleteHall(hall)
+                self.gymHallGrid.takeItem(self.gymHallGrid.row(self.gymHallGrid.selectedItems()[0]))
+                break
+
+    def __hallGridSelected(self):
+        self.nameGymHallEdit.setText(self.gymHallGrid.selectedItems()[0].text())
+
+    def __initializeEquipments(self):
+        self.equipmentsGymHallComboBox.clear()
+        self.equipmentsGrid.clear()
+        for i in self.__controller.getAllHalls():
+            self.equipmentsGymHallComboBox.addItem(i.getName())
+            for j in i.getAllEquipments():
+                self.equipmentsGrid.addItem(j.getName())
+
+    def __createEquipment(self):
+        hall = self.__hallDict[self.equipmentsGymHallComboBox.currentText()]
+        self.__controller.createEquipment(self.nameEquipmentsEdit.text(), hall)
+        self.equipmentsGrid.addItem(self.nameEquipmentsEdit.text())
+        self.nameGymHallEdit.setText("")
+
+    def __updateEquipment(self):
+        pass
+        

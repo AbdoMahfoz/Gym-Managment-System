@@ -1,5 +1,5 @@
 from Models import Trainer, GymHall, ExercisePlan, ExercisePlanItem, Customer, datetime
-from Models import Subscription, SubscriptionType, SubscriptionTypeFactory
+from Models import Subscription, SubscriptionType, SubscriptionTypeFactory, Equipment
 
 class Controller():
     def __init__(self):
@@ -73,10 +73,16 @@ class Controller():
         self.__customers.append(customer)
         return customer
 
+    def createEquipment(self, name: str, hall: GymHall):
+        hall.addEquipment(Equipment(len(hall.getAllEquipments()), name))
+
     def deleteCustomer(self, customer: Customer):
         for sub in customer.getSubscribtions():
             sub.clearSubscription()
         self.__customers.remove(customer)
+
+    def deleteHall(self, hall: GymHall):
+        self.__halls.remove(hall)
 
     def cancelSubscribtion(self, customer: Customer, subscription: Subscription):
         subscription.clearSubscription()
